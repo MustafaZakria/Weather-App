@@ -1,6 +1,5 @@
-package com.vodafone.search.component
+package com.vodafone.search.navigation
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.compose.composable
 
 import androidx.navigation.NavGraphBuilder

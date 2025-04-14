@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Padding -->
+    <dimen name="padding_xs">4dp</dimen>
+    <dimen name="padding_sm">8dp</dimen>
+    <dimen name="padding_md">16dp</dimen>
+    <dimen name="padding_lg">24dp</dimen>
+    <dimen name="padding_xl">32dp</dimen>
+
+    <!-- Text Sizes -->
+    <dimen name="text_xs">12sp</dimen>
+    <dimen name="text_sm">16sp</dimen>
+    <dimen name="text_md">18sp</dimen>
+    <dimen name="text_lg">24sp</dimen>
+    <dimen name="text_xl">32sp</dimen>
+    <dimen name="text_xxl">48sp</dimen>
+
+    <!-- Corner Radii -->
+    <dimen name="corner_radius_sm">8dp</dimen>
+    <dimen name="corner_radius_md">24dp</dimen>
+    <dimen name="corner_radius_lg">32dp</dimen>
+    <dimen name="corner_radius_xl">24dp</dimen>
+
+    <!-- Icon Sizes -->
+    <dimen name="icon_size_standard">24dp</dimen>
+    <dimen name="icon_size_lg">48dp</dimen>
+    <dimen name="icon_size_circle">32dp</dimen>
+
+</resources>

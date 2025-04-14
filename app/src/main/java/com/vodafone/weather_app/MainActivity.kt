@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.vodafone.weather_app.theme.WeatherappTheme
+import com.vodafone.core.presentation.ui.theme.WeatherappTheme
 import com.vodafone.weather_app.navigation.MainNavGraph
 
 class MainActivity : ComponentActivity() {

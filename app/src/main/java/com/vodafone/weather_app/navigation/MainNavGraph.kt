@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.vodafone.detail.navigation.detailScreen
 import com.vodafone.home.navigation.HOME_SCREEN_ROUTE
 import com.vodafone.home.navigation.homeScreen
-import com.vodafone.search.component.searchScreen
+import com.vodafone.search.navigation.searchScreen
 
 @Composable
 fun MainNavGraph(

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello</string>
+    <string name="discover_the_weather">Discover the weather</string>
+    <string name="no_recent_weather">No recent weather</string>
+</resources>
