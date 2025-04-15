@@ -3,7 +3,7 @@ package com.vodafone.search.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.vodafone.search.SearchScreen
+import com.vodafone.search.presentation.SearchScreen
 
 private const val SEARCH_SCREEN_ROUTE = "search"
 
@@ -19,7 +19,7 @@ fun NavGraphBuilder.searchScreen(
         route = SEARCH_SCREEN_ROUTE
     ) {
         SearchScreen(
-            onNavigateToDetail = { city ->
+            onCityItemClick = { city ->
                 onNavigateToDetail(
                     city.lat.toString(),
                     city.lon.toString()

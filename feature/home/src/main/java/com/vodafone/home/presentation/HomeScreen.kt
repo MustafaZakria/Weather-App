@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.vodafone.core.domain.model.Weather
+import com.vodafone.core.presentation.components.LoadingIndicator
 import com.vodafone.core.presentation.ui.theme.WeatherappTheme
 import com.vodafone.home.R
 import com.vodafone.home.presentation.component.HomeTopBar
@@ -58,7 +58,12 @@ fun HomeScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(top = 40.dp, start = 16.dp, end = 16.dp),
+            .padding(
+                top = dimensionResource(com.vodafone.core.R.dimen.screen_top_padding),
+                start = dimensionResource(com.vodafone.core.R.dimen.padding_md),
+                end = dimensionResource(com.vodafone.core.R.dimen.padding_md),
+                bottom = dimensionResource(com.vodafone.core.R.dimen.padding_md)
+            ),
         topBar = {
             HomeTopBar(onSearchClick = onSearchClick)
         },
@@ -72,28 +77,25 @@ fun HomeScreenContent(
             when (recentCityState) {
 
                 RecentCityState.Loading -> {
-                    Box(
+                    LoadingIndicator(
                         modifier = Modifier
-                            .height(170.dp)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
+                            .padding(top = dimensionResource(com.vodafone.core.R.dimen.padding_lg))
+                            .fillMaxWidth()
+                    )
                 }
 
                 RecentCityState.NoRecentCity -> {
                     Box(
                         modifier = Modifier
-                            .height(170.dp)
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(top = dimensionResource(com.vodafone.core.R.dimen.padding_lg)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = stringResource(id = R.string.no_recent_weather),
                             fontSize = dimensionResource(com.vodafone.core.R.dimen.text_md).value.sp,
                             color = MaterialTheme.colorScheme.onBackground,
-                            fontWeight = FontWeight.Medium,
+                            fontWeight = FontWeight.Light,
                         )
                     }
                 }
@@ -121,7 +123,7 @@ fun HomeScreenContent(
 
 @Preview(showBackground = true)
 @Composable
-fun HomePreview() {
+private fun HomePreview() {
     WeatherappTheme {
         HomeScreenContent(
             recentCityState = RecentCityState.Success(

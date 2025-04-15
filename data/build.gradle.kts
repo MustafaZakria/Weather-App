@@ -37,7 +37,7 @@ android {
     room {
         schemaDirectory("$projectDir/schemas")
     }
-
+    android.buildFeatures.buildConfig = true
 }
 
 dependencies {

@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
     implementation(libs.androidx.core.ktx)
-//    api(libs.material)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.androidx.navigation.common)
@@ -47,7 +46,6 @@ dependencies {
     implementation(libs.hilt.android)
     debugImplementation(libs.ui.tooling)
     kapt(libs.hilt.android.compiler)
-
 
     implementation(libs.coil.compose)
 }

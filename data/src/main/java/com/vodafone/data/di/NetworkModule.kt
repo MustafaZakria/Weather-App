@@ -1,7 +1,9 @@
 package com.vodafone.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.vodafone.data.BuildConfig
 import com.vodafone.data.remote.BASE_URL
+import com.vodafone.data.remote.QUERY_API_KEY
 import com.vodafone.data.remote.WeatherApi
 import dagger.Module
 import dagger.Provides
@@ -31,7 +33,7 @@ object NetworkModule {
                 var request: Request = chain.request()
                 val url: HttpUrl =
                     request.url.newBuilder()
-//                        .addQueryParameter(QUERY_API_KEY, BuildConfig.API_KEY)
+                        .addQueryParameter(QUERY_API_KEY, BuildConfig.API_KEY)
                         .build()
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_result">No result</string>
+    <string name="search_city">Search for a city</string>
+    <string name="back_button">back press</string>
+</resources>

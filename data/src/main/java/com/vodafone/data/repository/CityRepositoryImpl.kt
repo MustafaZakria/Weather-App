@@ -1,9 +1,8 @@
 package com.vodafone.data.repository
 
-import android.util.Log
+import com.vodafone.core.domain.model.City
 import com.vodafone.core.util.DispatcherProvider
 import com.vodafone.data.local.CityDao
-import com.vodafone.core.domain.model.City
 import com.vodafone.data.local.sharedpref.CitySharedPreference
 import com.vodafone.data.local.util.CityJsonLoader
 import kotlinx.coroutines.withContext
@@ -18,8 +17,10 @@ class CityRepositoryImpl @Inject constructor(
 
     override suspend fun loadCities() {
         withContext(dispatcherProvider.io) {
-            val cities = cityJsonLoader.parseCityJson()
-            cityDao.insertCities(cities)
+            if (cityDao.getAllCities().isEmpty()) {
+                val cities = cityJsonLoader.parseCityJson()
+                cityDao.insertCities(cities)
+            }
         }
     }
 

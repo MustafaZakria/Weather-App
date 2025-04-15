@@ -19,7 +19,7 @@ fun NavGraphBuilder.detailScreen(
     onNavigateToHome: () -> Unit
 ) {
     composable(
-        route = DETAIL_SCREEN_ROUTE,
+        route = "$DETAIL_SCREEN_ROUTE/{$latArg}/{$lonArg}",
         arguments = listOf(
             navArgument(latArg) { type = NavType.StringType },
             navArgument(lonArg) { type = NavType.StringType }

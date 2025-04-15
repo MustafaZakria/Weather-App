@@ -6,6 +6,7 @@
     <dimen name="padding_md">16dp</dimen>
     <dimen name="padding_lg">24dp</dimen>
     <dimen name="padding_xl">32dp</dimen>
+    <dimen name="screen_top_padding">40dp</dimen>
 
     <!-- Text Sizes -->
     <dimen name="text_xs">12sp</dimen>
@@ -23,6 +24,7 @@
 
     <!-- Icon Sizes -->
     <dimen name="icon_size_standard">24dp</dimen>
+    <dimen name="icon_size_medium">32dp</dimen>
     <dimen name="icon_size_lg">48dp</dimen>
     <dimen name="icon_size_circle">32dp</dimen>
 
