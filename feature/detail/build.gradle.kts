@@ -32,4 +32,5 @@ dependencies {
     implementation(libs.androidx.navigation.common)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.navigation.compose)
+    testImplementation(libs.junit.junit)
 }

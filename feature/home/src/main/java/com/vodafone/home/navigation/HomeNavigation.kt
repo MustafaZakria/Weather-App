@@ -11,6 +11,9 @@ fun NavGraphBuilder.homeScreen() {
     composable(
         route = HOME_SCREEN_ROUTE
     ) {
-//        HomeScreen()
+        HomeScreen(
+            onNavigateToDetail = {},
+            onNavigateToSearch = {}
+        )
     }
 }

@@ -31,12 +31,12 @@ android {
 }
 
 dependencies {
-    api(libs.androidx.core.ktx)
-    api(libs.material)
-    api(libs.androidx.material3.android)
-    api(libs.androidx.ui.tooling.preview.android)
-    api(libs.androidx.navigation.common)
-    api(libs.androidx.navigation.compose)
+    implementation(libs.androidx.core.ktx)
+//    api(libs.material)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.navigation.common)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

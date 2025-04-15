@@ -2,8 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
+    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.room")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -12,6 +14,17 @@ android {
 
     defaultConfig {
         minSdk = 24
+        buildConfigField("String", "API_KEY", "BuildConfig.API_KEY")
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 
     compileOptions {
@@ -21,15 +34,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.room.compiler)
     implementation(project(":core"))
+
+//    kapt("androidx.room:room-compiler:2.7.0")  // Annotation processor
+    kapt(libs.androidx.room.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -37,8 +53,6 @@ dependencies {
     implementation(libs.gson)
 
     implementation(libs.androidx.room.runtime)
-    kapt("androidx.room:room-compiler:2.7.0")  // Annotation processor
-
     // Kotlin Extensions and Coroutines support
     implementation(libs.androidx.room.ktx)  // Coroutine support
 
@@ -48,4 +62,10 @@ dependencies {
 
     // Hilt Navigation (For ViewModel injection)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.core)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.retrofit.kotlin.serialization)
+
 }

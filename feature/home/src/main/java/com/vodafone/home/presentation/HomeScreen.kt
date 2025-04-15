@@ -58,7 +58,7 @@ fun HomeScreenContent(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(dimensionResource(com.vodafone.core.R.dimen.padding_md)),
+            .padding(top = 40.dp, start = 16.dp, end = 16.dp),
         topBar = {
             HomeTopBar(onSearchClick = onSearchClick)
         },
@@ -91,9 +91,9 @@ fun HomeScreenContent(
                     ) {
                         Text(
                             text = stringResource(id = R.string.no_recent_weather),
-                            fontSize = dimensionResource(com.vodafone.core.R.dimen.text_xl).value.sp,
+                            fontSize = dimensionResource(com.vodafone.core.R.dimen.text_md).value.sp,
                             color = MaterialTheme.colorScheme.onBackground,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 }

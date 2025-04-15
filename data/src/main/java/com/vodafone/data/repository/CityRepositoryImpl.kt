@@ -1,5 +1,6 @@
 package com.vodafone.data.repository
 
+import android.util.Log
 import com.vodafone.core.util.DispatcherProvider
 import com.vodafone.data.local.CityDao
 import com.vodafone.core.domain.model.City
