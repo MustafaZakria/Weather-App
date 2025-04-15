@@ -24,8 +24,8 @@ class HomeViewModel @Inject constructor(
     private val cityRepository: CityRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<RecentCityState>(RecentCityState.Loading)
-    val uiState = _uiState.asStateFlow()
+    private val _cityState = MutableStateFlow<RecentCityState>(RecentCityState.Loading)
+    val cityState = _cityState.asStateFlow()
 
     private var errorChannel = Channel<UiText>(Channel.BUFFERED)
     var errorFlow = errorChannel.receiveAsFlow()
@@ -44,13 +44,13 @@ class HomeViewModel @Inject constructor(
     private suspend fun loadRecentCity() {
         getRecentCityUseCase()
             .onSuccess { weather ->
-                _uiState.update { RecentCityState.Success(weather) }
+                _cityState.update { RecentCityState.Success(weather) }
             }
             .onError { error ->
                 if (error == NO_RECENT_CITY) {
-                    _uiState.update { RecentCityState.NoRecentCity }
+                    _cityState.update { RecentCityState.NoRecentCity }
                 } else {
-                    _uiState.update { RecentCityState.Error }
+                    _cityState.update { RecentCityState.Error }
                     errorChannel.send(error.asUiText())
                 }
             }

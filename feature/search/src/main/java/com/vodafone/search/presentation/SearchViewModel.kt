@@ -23,6 +23,12 @@ class SearchViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SearchUiState(isLoading = true))
     val uiState = _uiState.asStateFlow()
 
+    private val _cityList = MutableStateFlow<List<City>>(listOf())
+    val cityList = _cityList.asStateFlow()
+
+    private val _cityListLoading = MutableStateFlow(true)
+    val cityListLoading = _cityListLoading.asStateFlow()
+
     private val _searchValue = MutableStateFlow("")
     val searchValue = _searchValue.asStateFlow()
 
@@ -38,15 +44,12 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun getCitiesByQuery(query: String) {
-        _uiState.update { it.copy(isLoading = true) }
+        _cityListLoading.update { true }
 
         val cities = getCitiesByQuery.invoke(query)
-        _uiState.update {
-            it.copy(
-                isLoading = false,
-                cities = cities
-            )
-        }
+
+        _cityList.update { cities }
+        _cityListLoading.update { false }
     }
 
     fun onSelectCity(city: City) {

@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.vodafone.detail.DetailScreen
+import com.vodafone.detail.presentation.DetailScreen
 
 private const val DETAIL_SCREEN_ROUTE = "detail"
 const val latArg = "lat"

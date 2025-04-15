@@ -45,7 +45,8 @@ fun SearchScreen(
     onNavigateToHome: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val cityList by viewModel.cityList.collectAsState()
+    val cityListLoading by viewModel.cityListLoading.collectAsState()
     val searchValue by viewModel.searchValue.collectAsState()
 
     SearchScreenContent(
@@ -54,7 +55,8 @@ fun SearchScreen(
             viewModel.onSelectCity(city)
         },
         onNavigateToHome = onNavigateToHome,
-        uiState = uiState,
+        cityList = cityList,
+        cityListLoading = cityListLoading,
         searchValue = searchValue,
         onSearchValueChange = { value ->
             viewModel.onSearchValueChange(value)
@@ -66,7 +68,8 @@ fun SearchScreen(
 fun SearchScreenContent(
     onCityItemClick: (city: City) -> Unit,
     onNavigateToHome: () -> Unit,
-    uiState: SearchUiState,
+    cityList: List<City>,
+    cityListLoading: Boolean,
     searchValue: String,
     onSearchValueChange: (String) -> Unit,
 ) {
@@ -118,7 +121,7 @@ fun SearchScreenContent(
             }
 
 
-            if (uiState.isLoading) {
+            if (cityListLoading) {
                 LoadingIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -127,7 +130,7 @@ fun SearchScreenContent(
                 )
             } else {
 
-                if (uiState.cities.isNotEmpty()) {
+                if (cityList.isNotEmpty()) {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -135,17 +138,17 @@ fun SearchScreenContent(
                         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_xs)),
                         contentPadding = PaddingValues(vertical = dimensionResource(R.dimen.padding_sm))
                     ) {
-                        items(uiState.cities) { city ->
+                        items(cityList) { city ->
                             CityItem(
                                 city = city,
                                 onItemClick = onCityItemClick,
-                                showDivider = city != uiState.cities.last()
+                                showDivider = city != cityList.last()
                             )
                         }
                     }
                 }
 
-                if (uiState.cities.isEmpty()) {
+                if (cityList.isEmpty()) {
                     Text(
                         text = stringResource(id = com.vodafone.search.R.string.no_result),
                         color = MaterialTheme.colorScheme.onBackground,
