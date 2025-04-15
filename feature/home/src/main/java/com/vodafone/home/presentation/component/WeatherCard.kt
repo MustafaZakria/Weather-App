@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -29,8 +28,8 @@ import com.vodafone.core.R.dimen.corner_radius_md
 import com.vodafone.core.R.dimen.padding_md
 import com.vodafone.core.R.dimen.padding_sm
 import com.vodafone.core.R.dimen.padding_xs
+import com.vodafone.core.R.dimen.text_md
 import com.vodafone.core.R.dimen.text_sm
-import com.vodafone.core.R.dimen.text_xs
 import com.vodafone.core.domain.model.Weather
 
 @Composable
@@ -68,13 +67,13 @@ fun WeatherCard(
                 ) {
                     Text(
                         text = weather.city,
-                        fontSize = dimensionResource(text_sm).value.sp,
+                        fontSize = dimensionResource(text_md).value.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Medium,
                     )
                     Text(
                         text = weather.date,
-                        fontSize = dimensionResource(text_xs).value.sp,
+                        fontSize = dimensionResource(text_sm).value.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier

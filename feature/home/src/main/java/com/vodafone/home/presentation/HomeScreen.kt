@@ -1,5 +1,6 @@
 package com.vodafone.home.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.kaffeeapp.components.ErrorImage
 import com.vodafone.core.domain.model.Weather
 import com.vodafone.core.presentation.components.LoadingIndicator
 import com.vodafone.core.presentation.ui.theme.WeatherappTheme
@@ -40,6 +43,12 @@ fun HomeScreen(
 ) {
     val recentCityState by homeViewModel.uiState.collectAsState()
     val error by homeViewModel.errorFlow.collectAsState(initial = null)
+
+    LaunchedEffect(recentCityState) {
+        if(recentCityState is RecentCityState.Success) {
+            Log.d("city", (recentCityState as RecentCityState.Success).weather.toString())
+        }
+    }
 
     HomeScreenContent(
         onSearchClick = onNavigateToSearch,
@@ -114,7 +123,9 @@ fun HomeScreenContent(
                     )
                 }
 
-                RecentCityState.Error -> {}
+                RecentCityState.Error -> {
+                    ErrorImage()
+                }
             }
         }
 

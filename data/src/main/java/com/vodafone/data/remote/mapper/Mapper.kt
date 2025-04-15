@@ -13,7 +13,7 @@ fun WeatherDto.toWeather(): Weather {
         lat = location.lat,
         lon = location.lon,
         temperature = current.temp_c.asFormattedTemperature(),
-        icon = current.condition.icon,
+        icon = current.condition.icon.asFormattedIconUrl(),
         date = location.localtime_epoch.asCurrentDate(),
         condition = current.condition.text
     )
@@ -25,7 +25,7 @@ fun WeatherDetailDto.toWeatherDetail(): WeatherDetail {
         lat = location.lat,
         lon = location.lon,
         temperature = current.temp_c.asFormattedTemperature(),
-        icon = current.condition.icon,
+        icon = current.condition.icon.asFormattedIconUrl(),
         date = location.localtime_epoch.asCurrentDate(),
         status = current.condition.text,
         dailyForecast = forecast.forecastday.map { it.asDaily() },
@@ -37,7 +37,7 @@ fun ForecastDay.asDaily(): Daily {
         avgTemperature = day.avgtemp_c.asFormattedTemperature(),
         minTemperature = day.mintemp_c.asFormattedTemperature(),
         maxTemperature = day.maxtemp_c.asFormattedTemperature(),
-        icon = day.condition.icon,
+        icon = day.condition.icon.asFormattedIconUrl(),
         date = date_epoch.asDailyDate(),
         status = day.condition.text
     )

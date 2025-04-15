@@ -46,3 +46,7 @@ internal fun monthName(timeStamp: Long): String? {
     val date = calendar.timeInMillis
     return SimpleDateFormat("MMM", Locale.ENGLISH).format(date)
 }
+
+fun String.asFormattedIconUrl(): String {
+    return "https:$this"
+}

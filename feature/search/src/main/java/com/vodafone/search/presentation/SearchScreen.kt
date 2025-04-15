@@ -50,7 +50,7 @@ fun SearchScreen(
 
     SearchScreenContent(
         onCityItemClick = { city ->
-            onCityItemClick(city)
+//            onCityItemClick(city)
             viewModel.onSelectCity(city)
         },
         onNavigateToHome = onNavigateToHome,
@@ -157,7 +157,6 @@ fun SearchScreenContent(
                             .padding(top = dimensionResource(R.dimen.padding_lg))
                     )
                 }
-
             }
         }
     }

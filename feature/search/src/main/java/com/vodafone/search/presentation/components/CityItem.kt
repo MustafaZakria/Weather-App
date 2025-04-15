@@ -38,7 +38,7 @@ fun CityItem(
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                 thickness = 1.dp,
-                modifier = Modifier.padding(vertical = dimensionResource(com.vodafone.core.R.dimen.padding_xs))
+                modifier = Modifier.padding(vertical = dimensionResource(com.vodafone.core.R.dimen.padding_sm))
             )
         }
     }

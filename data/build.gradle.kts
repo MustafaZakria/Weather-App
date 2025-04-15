@@ -6,6 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.room")
     id("kotlinx-serialization")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -14,7 +15,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        buildConfigField("String", "API_KEY", "BuildConfig.API_KEY")
+        buildConfigField("String", "API_KEY", project.properties["API_KEY"].toString())
     }
 
     packaging {
