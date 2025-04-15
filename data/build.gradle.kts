@@ -43,7 +43,6 @@ android {
 dependencies {
     implementation(project(":core"))
 
-//    kapt("androidx.room:room-compiler:2.7.0")  // Annotation processor
     kapt(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)

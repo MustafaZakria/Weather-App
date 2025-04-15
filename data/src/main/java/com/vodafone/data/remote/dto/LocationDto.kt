@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class LocationDto(
     val name: String,
     val country: String,
-    val localtime: String,
+    val localtime_epoch: Int,
     val region: String,
     val lat: Double,
     val lon: Double

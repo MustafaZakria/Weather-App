@@ -25,7 +25,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient.Builder {
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(Interceptor { chain ->
                 var request: Request = chain.request()
@@ -38,7 +38,7 @@ object NetworkModule {
             })
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BASIC
-            })
+            }).build()
     }
 
     @Provides
@@ -50,12 +50,12 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitClient(
-        okHttpClient: OkHttpClient.Builder,
+        okHttpClient: OkHttpClient,
         networkJson: Json
     ): WeatherApi {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(okHttpClient.build())
+            .client(okHttpClient)
             .addConverterFactory(
                 @OptIn(ExperimentalSerializationApi::class)
                 networkJson.asConverterFactory("application/json".toMediaType())

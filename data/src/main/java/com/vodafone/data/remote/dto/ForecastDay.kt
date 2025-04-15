@@ -1,7 +1,7 @@
 package com.vodafone.data.remote.dto
 
-data class Forecastday(
-    val date: String,
+data class ForecastDay(
+    val date_epoch: Int,
     val day: DayDto,
     val hour: List<HourDto>
 )

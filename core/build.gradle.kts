@@ -47,4 +47,6 @@ dependencies {
 
     // Hilt Navigation (For ViewModel injection)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.retrofit.core)
 }

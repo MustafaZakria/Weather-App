@@ -10,15 +10,15 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CityRepositoryImpl @Inject constructor(
-    val cityDao: CityDao,
-    val dispatcherProvider: DispatcherProvider,
-    val CityJsonLoader: CityJsonLoader,
-    val citySharedPreference: CitySharedPreference
+    private val cityDao: CityDao,
+    private val dispatcherProvider: DispatcherProvider,
+    private val cityJsonLoader: CityJsonLoader,
+    private val citySharedPreference: CitySharedPreference
 ) : CityRepository {
 
     override suspend fun loadCities() {
         withContext(dispatcherProvider.io) {
-            val cities = CityJsonLoader.parseCityJson()
+            val cities = cityJsonLoader.parseCityJson()
             cityDao.insertCities(cities)
         }
     }
