@@ -10,6 +10,8 @@ import com.vodafone.data.remote.dto.WeatherDto
 fun WeatherDto.toWeather(): Weather {
     return Weather(
         city = location.name,
+        lat = location.lat,
+        lon = location.lon,
         temperature = current.temp_c.asFormattedTemperature(),
         icon = current.condition.icon,
         date = location.localtime_epoch.asCurrentDate(),
@@ -20,6 +22,8 @@ fun WeatherDto.toWeather(): Weather {
 fun WeatherDetailDto.toWeatherDetail(): WeatherDetail {
     return WeatherDetail(
         cityName = location.name,
+        lat = location.lat,
+        lon = location.lon,
         temperature = current.temp_c.asFormattedTemperature(),
         icon = current.condition.icon,
         date = location.localtime_epoch.asCurrentDate(),

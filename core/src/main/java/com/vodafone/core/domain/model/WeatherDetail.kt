@@ -2,6 +2,8 @@ package com.vodafone.core.domain.model
 
 data class WeatherDetail(
     val cityName: String,
+    val lat: Double,
+    val lon: Double,
     val temperature: String,
     val icon: String,
     val date: String,

@@ -131,6 +131,8 @@ fun HomePreview() {
                     condition = "cloudy",
                     temperature = "28C",
                     date = "12/12/222",
+                    lat = 30.0444,
+                    lon = 31.2357
                 )
             )
         )
