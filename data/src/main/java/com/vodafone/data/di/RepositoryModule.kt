@@ -2,6 +2,8 @@ package com.vodafone.data.di
 
 import com.vodafone.data.repository.CityRepository
 import com.vodafone.data.repository.CityRepositoryImpl
+import com.vodafone.data.repository.WeatherRepository
+import com.vodafone.data.repository.WeatherRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,9 @@ abstract class RepositoryModule {
     abstract fun bindCityRepository(
         impl: CityRepositoryImpl
     ): CityRepository
+
+    @Binds
+    abstract fun bindWeatherRepository(
+        impl: WeatherRepositoryImpl
+    ): WeatherRepository
 }

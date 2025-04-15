@@ -13,6 +13,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,18 +38,21 @@ fun HomeScreen(
     onNavigateToDetail: (Weather) -> Unit,
     onNavigateToSearch: () -> Unit
 ) {
+    val recentCityState by homeViewModel.uiState.collectAsState()
+    val error by homeViewModel.errorFlow.collectAsState(initial = null)
 
-
-    HomeScreenContent()
-
+    HomeScreenContent(
+        onSearchClick = onNavigateToSearch,
+        onWeatherItemClick = onNavigateToDetail,
+        recentCityState = recentCityState
+    )
 }
 
 @Composable
 fun HomeScreenContent(
     onSearchClick: () -> Unit = {},
     onWeatherItemClick: (Weather) -> Unit = {},
-    recentWeather: Weather? = null,
-    isLoading: Boolean = false
+    recentCityState: RecentCityState,
 ) {
     Scaffold(
         modifier = Modifier
@@ -64,41 +69,50 @@ fun HomeScreenContent(
                 .fillMaxWidth()
                 .padding(paddingValues)
         ) {
-            if (isLoading) {
-                Box(
-                    modifier = Modifier
-                        .height(170.dp)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
+            when (recentCityState) {
+
+                RecentCityState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .height(170.dp)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
-            } else if (recentWeather == null) {
-                Box(
-                    modifier = Modifier
-                        .height(170.dp)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.no_recent_weather),
-                        fontSize = dimensionResource(com.vodafone.core.R.dimen.text_xl).value.sp,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontWeight = FontWeight.Bold,
+
+                RecentCityState.NoRecentCity -> {
+                    Box(
+                        modifier = Modifier
+                            .height(170.dp)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.no_recent_weather),
+                            fontSize = dimensionResource(com.vodafone.core.R.dimen.text_xl).value.sp,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+                }
+
+                is RecentCityState.Success -> {
+                    WeatherCard(
+                        weather = recentCityState.weather,
+                        modifier = Modifier
+                            .height(170.dp)
+                            .fillMaxWidth()
+                            .background(Color.Transparent)
+                            .padding(dimensionResource(com.vodafone.core.R.dimen.padding_md))
+                            .clickable {
+                                onWeatherItemClick(recentCityState.weather)
+                            }
                     )
                 }
-            } else {
-                WeatherCard(
-                    weather = recentWeather,
-                    modifier = Modifier
-                        .height(170.dp)
-                        .fillMaxWidth()
-                        .background(Color.Transparent)
-                        .padding(dimensionResource(com.vodafone.core.R.dimen.padding_md))
-                        .clickable {
-                            onWeatherItemClick(recentWeather)
-                        }
-                )
+
+                RecentCityState.Error -> {}
             }
         }
 
@@ -110,12 +124,14 @@ fun HomeScreenContent(
 fun HomePreview() {
     WeatherappTheme {
         HomeScreenContent(
-            recentWeather = Weather(
-                city = "Cairo",
-                icon = "https://openweathermap.org/img/wn/03n@2x.png",
-                condition = "cloudy",
-                temperature = "28C",
-                date = "12/12/222",
+            recentCityState = RecentCityState.Success(
+                Weather(
+                    city = "Cairo",
+                    icon = "https://openweathermap.org/img/wn/03n@2x.png",
+                    condition = "cloudy",
+                    temperature = "28C",
+                    date = "12/12/222",
+                )
             )
         )
     }
