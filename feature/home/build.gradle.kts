@@ -48,4 +48,17 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.coil.compose)
+
+    // Core testing
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core.testing)
+
+    // Coroutines testing
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Mocking (MockK recommended)
+    testImplementation(libs.mockk)
+
+    // Truth for assertions
+    testImplementation(libs.truth)
 }

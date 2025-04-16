@@ -50,15 +50,15 @@ dependencies {
     implementation(libs.coil.compose)
 
     // Core testing
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core.testing)
 
     // Coroutines testing
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Mocking (MockK recommended)
-    testImplementation("io.mockk:mockk:1.13.8")
+    testImplementation(libs.mockk)
 
     // Truth for assertions
-    testImplementation("com.google.truth:truth:1.1.5")
+    testImplementation(libs.truth)
 }

@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
                 _cityState.update { RecentCityState.Success(weather) }
             }
             .onError { error ->
-                if (error == NO_RECENT_CITY) {
+                if (error == NO_RECENT_CITY) {  //because it has a different handling
                     _cityState.update { RecentCityState.NoRecentCity }
                 } else {
                     _cityState.update { RecentCityState.Error(error.asUiText()) }

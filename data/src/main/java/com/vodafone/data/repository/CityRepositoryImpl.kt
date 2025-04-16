@@ -41,6 +41,12 @@ class CityRepositoryImpl @Inject constructor(
     }
 
     override fun getSavedCityId(): Int {
-        return citySharedPreference.getCityId()
+        val id = citySharedPreference.getCityId()
+        return if (id != -1)
+            id
+        else
+            throw NoSavedCityException()
     }
 }
+
+class NoSavedCityException: Exception()
