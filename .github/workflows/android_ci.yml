@@ -28,6 +28,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          echo "api.key=${{ secrets.API_KEY }}" >> local.properties
+          cat local.properties
+
       # 2. Publish weather-utils to local Maven repo
       - name: Publish weather-utils library
         run: ./gradlew :weather-utils:publishToMavenLocal
@@ -37,13 +43,6 @@ jobs:
         run: |
           ls -la ~/.m2/repository/com/zek/weather-utils/1.0.0/
           cat ~/.m2/repository/com/zek/weather-utils/1.0.0/weather-utils-1.0.0.pom
-
-      # 4. Create local.properties
-      - name: Create local.properties
-        run: |
-          echo "sdk.dir=$ANDROID_HOME" > local.properties
-          echo "api.key=${{ secrets.API_KEY }}" >> local.properties
-          cat local.properties
 
       # 5. Cache Gradle
       - name: Cache Gradle
