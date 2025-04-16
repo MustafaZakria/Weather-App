@@ -27,7 +27,7 @@ import com.vodafone.core.presentation.ui.theme.WeatherappTheme
 fun DetailTopBar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    cityName: String
+    cityName: String?
 ) {
     Row(
         modifier = modifier
@@ -54,20 +54,23 @@ fun DetailTopBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.LocationOn,
-                    contentDescription = "Location",
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.size(dimensionResource(com.vodafone.core.R.dimen.icon_size_standard))
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = cityName,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if(cityName != null) {
+                    Icon(
+                        imageVector = Icons.Rounded.LocationOn,
+                        contentDescription = "Location",
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.size(dimensionResource(com.vodafone.core.R.dimen.icon_size_standard))
+                    )
+
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = cityName,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
 
