@@ -45,10 +45,10 @@ fun WeatherCard(
 
         Row(
             modifier = Modifier
+                .fillMaxWidth()
                 .background(
                     MaterialTheme.colorScheme.surfaceVariant
                 )
-                .fillMaxWidth()
                 .padding(
                     horizontal = dimensionResource(padding_md),
                     vertical = dimensionResource(padding_sm)
@@ -56,6 +56,7 @@ fun WeatherCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Column(
                 modifier = Modifier.fillMaxHeight(),
                 horizontalAlignment = Alignment.Start,

@@ -1,5 +1,6 @@
 package com.vodafone.data.repository
 
+import android.util.Log
 import com.vodafone.core.domain.model.Weather
 import com.vodafone.core.domain.model.WeatherDetail
 import com.vodafone.core.util.DispatcherProvider
@@ -39,9 +40,12 @@ class WeatherRepositoryImpl @Inject constructor(
     ): Result<WeatherDetail, NetworkError> {
         return safeCall<WeatherDetailDto> {
             withContext(dispatcherProvider.io) {
-                weatherApi.getForecast("$lat,$lon")
+                val request = weatherApi.getForecast("$lat,$lon")
+                Log.d("WeatherRepositoryImpl", "$request")
+                request
             }
         }.map {
+            Log.d("WeatherRepositoryImpl", "$it")
             it.toWeatherDetail()
         }
     }

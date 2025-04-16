@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -16,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.kaffeeapp.components.ErrorImage
+import com.vodafone.core.R.dimen.corner_radius_md
 import com.vodafone.core.domain.model.Weather
 import com.vodafone.core.presentation.components.LoadingIndicator
 import com.vodafone.core.presentation.ui.theme.WeatherappTheme
@@ -107,8 +110,9 @@ fun HomeScreenContent(
                         modifier = Modifier
                             .height(170.dp)
                             .fillMaxWidth()
+                            .padding(dimensionResource(com.vodafone.core.R.dimen.padding_xs))
                             .background(Color.Transparent)
-                            .padding(dimensionResource(com.vodafone.core.R.dimen.padding_md))
+                            .clip(RoundedCornerShape(dimensionResource(corner_radius_md)))
                             .clickable {
                                 onWeatherItemClick(recentCityState.weather)
                             }
