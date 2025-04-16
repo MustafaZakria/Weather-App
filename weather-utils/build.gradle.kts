@@ -31,11 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-        }
-    }
 }
 
 dependencies {
@@ -51,21 +46,13 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("release") {
+            create<MavenPublication>("maven") {
                 groupId = "com.zek"
                 artifactId = "weather-utils"
                 version = "1.0.0"
 
-                pom {
-                    name.set("Weather Utils")
-                    description.set("Weather formatting library")
-                }
-
                 from(components["release"])
             }
-        }
-        repositories {
-            mavenLocal()
         }
     }
 }
