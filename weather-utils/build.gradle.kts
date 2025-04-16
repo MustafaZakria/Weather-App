@@ -56,8 +56,16 @@ afterEvaluate {
                 artifactId = "weather-utils"
                 version = "1.0.0"
 
+                pom {
+                    name.set("Weather Utils")
+                    description.set("Weather formatting library")
+                }
+
                 from(components["release"])
             }
+        }
+        repositories {
+            mavenLocal()
         }
     }
 }

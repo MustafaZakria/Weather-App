@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        mavenLocal()
+        maven { url = uri("${rootDir}/local-repo") }
     }
 }
 
