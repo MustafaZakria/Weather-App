@@ -119,7 +119,7 @@ fun HomeScreenContent(
                     )
                 }
 
-                RecentCityState.Error -> {
+                is RecentCityState.Error -> {
                     ErrorImage()
                 }
             }

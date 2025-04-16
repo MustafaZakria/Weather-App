@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
                 if (error == NO_RECENT_CITY) {
                     _cityState.update { RecentCityState.NoRecentCity }
                 } else {
-                    _cityState.update { RecentCityState.Error }
+                    _cityState.update { RecentCityState.Error(error.asUiText()) }
                     errorChannel.send(error.asUiText())
                 }
             }
@@ -59,7 +59,7 @@ class HomeViewModel @Inject constructor(
 
 sealed class RecentCityState {
     class Success(val weather: Weather) : RecentCityState()
-    data object Error : RecentCityState()
+    class Error(val error: UiText) : RecentCityState()
     data object Loading : RecentCityState()
     data object NoRecentCity : RecentCityState()
 }

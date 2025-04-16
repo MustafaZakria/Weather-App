@@ -1,6 +1,5 @@
 package com.vodafone.detail.presentation
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getWeatherDetailUseCase: GetWeatherDetailUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DetailUiState(isLoading = true))
@@ -33,7 +32,7 @@ class DetailViewModel @Inject constructor(
         if (lat != null && lon != null) {
             getWeatherDetail(lat, lon)
         } else {
-            _uiState.update { it.copy(isError = true) }
+            _uiState.update { it.copy(isError = true, isLoading = false) }
         }
     }
 
@@ -45,7 +44,6 @@ class DetailViewModel @Inject constructor(
                 _uiState.update { it.copy(detail = detail) }
             }
             .onError { error ->
-                Log.d("DetailViewModel", "${error.toString()}")
                 _uiState.update { it.copy(isError = true) }
             }
 
