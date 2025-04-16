@@ -6,6 +6,7 @@ import com.vodafone.core.domain.model.WeatherDetail
 import com.vodafone.data.remote.dto.ForecastDay
 import com.vodafone.data.remote.dto.WeatherDetailDto
 import com.vodafone.data.remote.dto.WeatherDto
+import com.vodafone.weather_utils.WeatherExtensions.asFormattedTemperature
 
 fun WeatherDto.toWeather(): Weather {
     return Weather(

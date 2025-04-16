@@ -4,12 +4,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.math.roundToInt
-
-fun Double.asFormattedTemperature(): String {
-    val temperature = this.roundToInt()
-    return "$temperature°C"
-}
 
 fun Int.asCurrentDate(): String {
     val time = Date(this.toLong() * 1000)

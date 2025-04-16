@@ -80,4 +80,7 @@ dependencies {
 
     // Truth for assertions
     testImplementation(libs.truth)
+
+    //local library
+    implementation("com.zek:weather-utils:1.0.0")
 }

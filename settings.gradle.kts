@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -26,3 +27,4 @@ include(":feature:search")
 include(":feature:detail")
 include(":data")
 include(":core")
+include(":weather-utils")

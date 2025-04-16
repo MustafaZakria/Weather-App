@@ -37,6 +37,7 @@ class HomeViewModel @Inject constructor(
     private fun loadData() {
         viewModelScope.launch {
             cityRepository.loadCities()
+
             loadRecentCity()
         }
     }

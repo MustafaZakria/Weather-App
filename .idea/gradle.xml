@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/feature/detail" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/search" />
+            <option value="$PROJECT_DIR$/weather-utils" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
