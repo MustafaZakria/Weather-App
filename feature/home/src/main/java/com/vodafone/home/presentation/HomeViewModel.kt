@@ -24,11 +24,11 @@ class HomeViewModel @Inject constructor(
     private val cityRepository: CityRepository
 ) : ViewModel() {
 
-    private val _cityState = MutableStateFlow<RecentCityState>(RecentCityState.Loading)
-    val cityState = _cityState.asStateFlow()
+    private val _recentWeatherState = MutableStateFlow<RecentWeatherState>(RecentWeatherState.Loading)
+    val recentWeatherState = _recentWeatherState.asStateFlow()
 
-    private var errorChannel = Channel<UiText>(Channel.BUFFERED)
-    var errorFlow = errorChannel.receiveAsFlow()
+    private var _errorChannel = Channel<UiText>(Channel.BUFFERED)
+    var errorChannel = _errorChannel.receiveAsFlow()
 
     init {
         loadData()
@@ -44,22 +44,22 @@ class HomeViewModel @Inject constructor(
     private suspend fun loadRecentCity() {
         getRecentCityUseCase()
             .onSuccess { weather ->
-                _cityState.update { RecentCityState.Success(weather) }
+                _recentWeatherState.update { RecentWeatherState.Success(weather) }
             }
             .onError { error ->
                 if (error == NO_RECENT_CITY) {  //because it has a different handling
-                    _cityState.update { RecentCityState.NoRecentCity }
+                    _recentWeatherState.update { RecentWeatherState.NoRecentCity }
                 } else {
-                    _cityState.update { RecentCityState.Error(error.asUiText()) }
-                    errorChannel.send(error.asUiText())
+                    _recentWeatherState.update { RecentWeatherState.Error(error.asUiText()) }
+                    _errorChannel.send(error.asUiText())
                 }
             }
     }
 }
 
-sealed class RecentCityState {
-    class Success(val weather: Weather) : RecentCityState()
-    class Error(val error: UiText) : RecentCityState()
-    data object Loading : RecentCityState()
-    data object NoRecentCity : RecentCityState()
+sealed class RecentWeatherState {
+    class Success(val weather: Weather) : RecentWeatherState()
+    class Error(val error: UiText) : RecentWeatherState()
+    data object Loading : RecentWeatherState()
+    data object NoRecentCity : RecentWeatherState()
 }

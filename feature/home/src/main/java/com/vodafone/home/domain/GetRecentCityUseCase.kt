@@ -14,22 +14,12 @@ class GetRecentCityUseCase @Inject constructor(
     private val weatherRepository: WeatherRepository
 ) {
     suspend operator fun invoke(): Result<Weather, Error> {
-//        val cityIdResult = cityRepository.getSavedCityId()
-//
-//        return if (cityIdResult == -1) {
-//            Result.Error(RecentCityError.NO_RECENT_CITY)
-//        } else {
-//            val city = cityRepository.getCityById(cityIdResult)
-//
-//            weatherRepository.getCurrentWeather(
-//                city.lat,
-//                city.lon
-//            )
-//        }
         return try {
-            val cityIdResult = cityRepository.getSavedCityId()  // This will throw an exception if no city is saved
+            val cityIdResult =
+                cityRepository.getSavedCityId()  // This will throw an exception if no city is saved
 
-            val city = cityRepository.getCityById(cityIdResult) // This will throw an exception if the city is not found
+            val city =
+                cityRepository.getCityById(cityIdResult) // This will throw an exception if the city is not found
 
             weatherRepository.getCurrentWeather(
                 city.lat,

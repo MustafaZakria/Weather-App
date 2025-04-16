@@ -42,13 +42,13 @@ fun HomeScreen(
     onNavigateToDetail: (Weather) -> Unit,
     onNavigateToSearch: () -> Unit
 ) {
-    val recentCityState by homeViewModel.cityState.collectAsState()
-    val error by homeViewModel.errorFlow.collectAsState(initial = null)
+    val recentWeather by homeViewModel.recentWeatherState.collectAsState()
+    val error by homeViewModel.errorChannel.collectAsState(initial = null)
 
     HomeScreenContent(
         onSearchClick = onNavigateToSearch,
         onWeatherItemClick = onNavigateToDetail,
-        recentCityState = recentCityState
+        recentWeatherState = recentWeather
     )
 }
 
@@ -56,7 +56,7 @@ fun HomeScreen(
 fun HomeScreenContent(
     onSearchClick: () -> Unit = {},
     onWeatherItemClick: (Weather) -> Unit = {},
-    recentCityState: RecentCityState,
+    recentWeatherState: RecentWeatherState,
 ) {
     Scaffold(
         modifier = Modifier
@@ -78,9 +78,9 @@ fun HomeScreenContent(
                 .fillMaxWidth()
                 .padding(paddingValues)
         ) {
-            when (recentCityState) {
+            when (recentWeatherState) {
 
-                RecentCityState.Loading -> {
+                RecentWeatherState.Loading -> {
                     LoadingIndicator(
                         modifier = Modifier
                             .padding(top = dimensionResource(com.vodafone.core.R.dimen.padding_lg))
@@ -88,7 +88,7 @@ fun HomeScreenContent(
                     )
                 }
 
-                RecentCityState.NoRecentCity -> {
+                RecentWeatherState.NoRecentCity -> {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -104,9 +104,9 @@ fun HomeScreenContent(
                     }
                 }
 
-                is RecentCityState.Success -> {
+                is RecentWeatherState.Success -> {
                     WeatherCard(
-                        weather = recentCityState.weather,
+                        weather = recentWeatherState.weather,
                         modifier = Modifier
                             .height(170.dp)
                             .fillMaxWidth()
@@ -114,12 +114,12 @@ fun HomeScreenContent(
                             .background(Color.Transparent)
                             .clip(RoundedCornerShape(dimensionResource(corner_radius_md)))
                             .clickable {
-                                onWeatherItemClick(recentCityState.weather)
+                                onWeatherItemClick(recentWeatherState.weather)
                             }
                     )
                 }
 
-                is RecentCityState.Error -> {
+                is RecentWeatherState.Error -> {
                     ErrorImage()
                 }
             }
@@ -133,7 +133,7 @@ fun HomeScreenContent(
 private fun HomePreview() {
     WeatherappTheme {
         HomeScreenContent(
-            recentCityState = RecentCityState.Success(
+            recentWeatherState = RecentWeatherState.Success(
                 Weather(
                     city = "Cairo",
                     icon = "https://openweathermap.org/img/wn/03n@2x.png",

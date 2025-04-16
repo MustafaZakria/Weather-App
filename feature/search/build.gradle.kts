@@ -50,4 +50,17 @@ dependencies {
     implementation(libs.hilt.android)
     debugImplementation(libs.ui.tooling)
     kapt(libs.hilt.android.compiler)
+
+    // Core testing
+    testImplementation(libs.junit)
+    testImplementation(libs.androidx.core.testing)
+
+    // Coroutines testing
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Mocking (MockK recommended)
+    testImplementation(libs.mockk)
+
+    // Truth for assertions
+    testImplementation(libs.truth)
 }

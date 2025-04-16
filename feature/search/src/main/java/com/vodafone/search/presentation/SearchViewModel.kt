@@ -16,12 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val getCitiesByQuery: GetCitiesByQueryUseCase,
+    private val getCitiesByQueryUseCase: GetCitiesByQueryUseCase,
     private val updateRecentCityUseCase: UpdateRecentCityUseCase
 ) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(SearchUiState(isLoading = true))
-    val uiState = _uiState.asStateFlow()
 
     private val _cityList = MutableStateFlow<List<City>>(listOf())
     val cityList = _cityList.asStateFlow()
@@ -46,7 +43,7 @@ class SearchViewModel @Inject constructor(
     private suspend fun getCitiesByQuery(query: String) {
         _cityListLoading.update { true }
 
-        val cities = getCitiesByQuery.invoke(query)
+        val cities = getCitiesByQueryUseCase.invoke(query)
 
         _cityList.update { cities }
         _cityListLoading.update { false }
@@ -60,9 +57,3 @@ class SearchViewModel @Inject constructor(
         _searchValue.value = value
     }
 }
-
-
-data class SearchUiState(
-    val isLoading: Boolean = false,
-    val cities: List<City> = emptyList(),
-)

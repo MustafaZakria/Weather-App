@@ -41,11 +41,9 @@ class WeatherRepositoryImpl @Inject constructor(
         return safeCall<WeatherDetailDto> {
             withContext(dispatcherProvider.io) {
                 val request = weatherApi.getForecast("$lat,$lon")
-                Log.d("WeatherRepositoryImpl", "$request")
                 request
             }
         }.map {
-            Log.d("WeatherRepositoryImpl", "$it")
             it.toWeatherDetail()
         }
     }

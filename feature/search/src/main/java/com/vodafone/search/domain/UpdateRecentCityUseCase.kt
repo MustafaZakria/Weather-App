@@ -1,5 +1,6 @@
 package com.vodafone.search.domain
 
+import android.util.Log
 import com.vodafone.core.domain.model.City
 import com.vodafone.data.repository.CityRepository
 import javax.inject.Inject

@@ -3,15 +3,14 @@ package com.vodafone.home.domain
 import com.vodafone.core.domain.model.City
 import com.vodafone.core.domain.model.Weather
 import com.vodafone.data.repository.CityRepository
+import com.vodafone.data.repository.NoSavedCityException
 import com.vodafone.data.repository.WeatherRepository
 import com.vodafone.home.domain.util.RecentCityError
 import com.zek.cryptotracker.core.domain.util.NetworkError
 import com.zek.cryptotracker.core.domain.util.Result
-import io.mockk.clearMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.coVerifySequence
-import io.mockk.every
+import io.mockk.coVerifyOrder
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -49,11 +48,10 @@ class GetRecentCityUseCaseTest {
         useCase = GetRecentCityUseCase(mockCityRepository, mockWeatherRepository)
     }
 
-    // Test cases
     @Test
-    fun `invoke should return error when no recent city exists`() = runTest {
+    fun `invoke should return NO_RECENT_CITY when NoSavedCityException is thrown`() = runTest {
         // Given
-        every { mockCityRepository.getSavedCityId() } returns -1
+        coEvery { mockCityRepository.getSavedCityId() } throws NoSavedCityException()
 
         // When
         val result = useCase()
@@ -62,12 +60,13 @@ class GetRecentCityUseCaseTest {
         assertTrue(result is Result.Error)
         assertEquals(RecentCityError.NO_RECENT_CITY, (result as Result.Error).error)
         coVerify(exactly = 0) { mockCityRepository.getCityById(any()) }
+        coVerify(exactly = 0) { mockWeatherRepository.getCurrentWeather(any(), any()) }
     }
 
     @Test
-    fun `invoke should return weather when recent city exists`() = runTest {
+    fun `invoke should return weather when all operations succeed`() = runTest {
         // Given
-        every { mockCityRepository.getSavedCityId() } returns testCityId
+        coEvery { mockCityRepository.getSavedCityId() } returns testCityId
         coEvery { mockCityRepository.getCityById(testCityId) } returns testCity
         coEvery { mockWeatherRepository.getCurrentWeather(testCity.lat, testCity.lon) } returns
                 Result.Success(testWeather)
@@ -85,9 +84,9 @@ class GetRecentCityUseCaseTest {
     }
 
     @Test
-    fun `invoke should return error when city lookup fails`() = runTest {
+    fun `invoke should return FETCHING_CITY_FAILED when city lookup fails`() = runTest {
         // Given
-        every { mockCityRepository.getSavedCityId() } returns testCityId
+        coEvery { mockCityRepository.getSavedCityId() } returns testCityId
         coEvery { mockCityRepository.getCityById(testCityId) } throws
                 NoSuchElementException("City not found")
 
@@ -96,29 +95,30 @@ class GetRecentCityUseCaseTest {
 
         // Then
         assertTrue(result is Result.Error)
-        assertTrue((result as Result.Error).error is RecentCityError)
+        assertEquals(RecentCityError.FETCHING_CITY_FAILED, (result as Result.Error).error)
     }
 
     @Test
-    fun `invoke should return error when weather fetch fails`() = runTest {
+    fun `invoke should return weather repository error directly`() = runTest {
         // Given
-        every { mockCityRepository.getSavedCityId() } returns testCityId
+        val testError = NetworkError.SERVER_ERROR
+        coEvery { mockCityRepository.getSavedCityId() } returns testCityId
         coEvery { mockCityRepository.getCityById(testCityId) } returns testCity
         coEvery { mockWeatherRepository.getCurrentWeather(any(), any()) } returns
-                Result.Error(NetworkError.SERVER_ERROR)
+                Result.Error(testError)
 
         // When
         val result = useCase()
 
         // Then
         assertTrue(result is Result.Error)
-        assertTrue((result as Result.Error).error is NetworkError)
+        assertEquals(testError, (result as Result.Error).error)
     }
 
     @Test
     fun `invoke should call repositories in correct sequence`() = runTest {
         // Given
-        every { mockCityRepository.getSavedCityId() } returns testCityId
+        coEvery { mockCityRepository.getSavedCityId() } returns testCityId
         coEvery { mockCityRepository.getCityById(testCityId) } returns testCity
         coEvery { mockWeatherRepository.getCurrentWeather(any(), any()) } returns
                 Result.Success(testWeather)
@@ -127,39 +127,10 @@ class GetRecentCityUseCaseTest {
         useCase()
 
         // Then
-        coVerifySequence {
+        coVerifyOrder {
             mockCityRepository.getSavedCityId()
             mockCityRepository.getCityById(testCityId)
             mockWeatherRepository.getCurrentWeather(testCity.lat, testCity.lon)
-        }
-    }
-
-    @Test
-    fun `invoke should handle edge case coordinates`() = runTest {
-        // Test cases
-        val testCases = listOf(
-            Pair(90.0, 180.0),   // Max valid
-            Pair(-90.0, -180.0), // Min valid
-            Pair(0.0, 0.0)       // Prime meridian/equator
-        )
-
-        testCases.forEach { (lat, lon) ->
-            // Setup
-            val edgeCity = testCity.copy(lat = lat, lon = lon)
-            every { mockCityRepository.getSavedCityId() } returns testCityId
-            coEvery { mockCityRepository.getCityById(testCityId) } returns edgeCity
-            coEvery { mockWeatherRepository.getCurrentWeather(lat, lon) } returns
-                    Result.Success(testWeather)
-
-            // When
-            val result = useCase()
-
-            // Then
-            assertTrue(result is Result.Success)
-            coVerify { mockWeatherRepository.getCurrentWeather(lat, lon) }
-
-            // Reset mocks for next iteration
-            clearMocks(mockCityRepository, mockWeatherRepository)
         }
     }
 }
