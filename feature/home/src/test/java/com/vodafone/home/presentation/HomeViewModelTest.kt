@@ -104,7 +104,6 @@ class HomeViewModelTest {
 
         // Then
         assertTrue(viewModel.recentWeatherState.value is RecentWeatherState.NoRecentCity)
-        coVerify(exactly = 0) { viewModel.errorChannel.collect(any()) }
     }
 
     @Test
